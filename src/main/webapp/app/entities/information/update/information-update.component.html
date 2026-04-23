@@ -1,0 +1,105 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-information-heading" data-cy="InformationCreateUpdateHeading" jhiTranslate="ecomApp.information.home.createOrEditLabel">
+        Create or edit a Information
+      </h2>
+
+      <div>
+        <jhi-alert-error />
+
+        @if (editForm.controls.id.value !== null) {
+          <div class="mb-3">
+            <label class="form-label" for="field_id" jhiTranslate="ecomApp.information.id">ID</label>
+            <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+          </div>
+        }
+
+        @let contenuRef = editForm.get('contenu')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_contenu" jhiTranslate="ecomApp.information.contenu">Contenu</label>
+          <textarea class="form-control" name="contenu" id="field_contenu" data-cy="contenu" formControlName="contenu"></textarea>
+          @if (contenuRef.invalid && (contenuRef.dirty || contenuRef.touched)) {
+            <div>
+              @if (editForm.get('contenu')?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">This field is required.</small>
+              }
+            </div>
+          }
+        </div>
+
+        @let horodatageRef = editForm.get('horodatage')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_horodatage" jhiTranslate="ecomApp.information.horodatage">Horodatage</label>
+          <div class="d-flex">
+            <input
+              id="field_horodatage"
+              data-cy="horodatage"
+              type="datetime-local"
+              class="form-control"
+              name="horodatage"
+              formControlName="horodatage"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+          @if (horodatageRef.invalid && (horodatageRef.dirty || horodatageRef.touched)) {
+            <div>
+              @if (editForm.get('horodatage')?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">This field is required.</small>
+              }
+              <small
+                class="form-text text-danger"
+                [hidden]="!editForm.get('horodatage')?.errors?.datetimelocal"
+                jhiTranslate="entity.validation.datetimelocal"
+                >This field should be a date and time.</small
+              >
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_utilisateur" jhiTranslate="ecomApp.information.utilisateur">Utilisateur</label>
+          <select
+            class="form-control"
+            id="field_utilisateur"
+            data-cy="utilisateur"
+            name="utilisateur"
+            formControlName="utilisateur"
+            [compareWith]="compareUtilisateur"
+          >
+            <option [ngValue]="null"></option>
+            @for (utilisateurOption of utilisateursSharedCollection; track $index) {
+              <option [ngValue]="utilisateurOption">{{ utilisateurOption.nom }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_crise" jhiTranslate="ecomApp.information.crise">Crise</label>
+          <select class="form-control" id="field_crise" data-cy="crise" name="crise" formControlName="crise" [compareWith]="compareCrise">
+            <option [ngValue]="null"></option>
+            @for (criseOption of crisesSharedCollection; track $index) {
+              <option [ngValue]="criseOption">{{ criseOption.nom }}</option>
+            }
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

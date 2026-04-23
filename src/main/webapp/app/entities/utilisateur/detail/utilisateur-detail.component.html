@@ -1,0 +1,55 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (utilisateur(); as utilisateurRef) {
+      <div>
+        <h2 data-cy="utilisateurDetailsHeading"><span jhiTranslate="ecomApp.utilisateur.detail.title">Utilisateur</span></h2>
+
+        <hr />
+
+        <jhi-alert-error />
+
+        <jhi-alert />
+
+        <dl class="row-md jh-entity-details">
+          <dt><span jhiTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ utilisateurRef.id }}</span>
+          </dd>
+          <dt><span jhiTranslate="ecomApp.utilisateur.nom">Nom</span></dt>
+          <dd>
+            <span>{{ utilisateurRef.nom }}</span>
+          </dd>
+          <dt><span jhiTranslate="ecomApp.utilisateur.prenom">Prenom</span></dt>
+          <dd>
+            <span>{{ utilisateurRef.prenom }}</span>
+          </dd>
+          <dt><span jhiTranslate="ecomApp.utilisateur.email">Email</span></dt>
+          <dd>
+            <span>{{ utilisateurRef.email }}</span>
+          </dd>
+          <dt><span jhiTranslate="ecomApp.utilisateur.isBanned">Is Banned</span></dt>
+          <dd>
+            <span>{{ utilisateurRef.isBanned }}</span>
+          </dd>
+          <dt><span jhiTranslate="ecomApp.utilisateur.criseTouchee">Crise Touchee</span></dt>
+          <dd>
+            @for (criseTouchee of utilisateurRef.criseTouchees; track $index; let last = $last) {
+              <span>
+                <a [routerLink]="['/crise', criseTouchee.id, 'view']">{{ criseTouchee?.nom }}</a
+                >{{ last ? '' : ', ' }}
+              </span>
+            }
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/utilisateur', utilisateurRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

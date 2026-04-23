@@ -1,0 +1,152 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-demande-heading" data-cy="DemandeCreateUpdateHeading" jhiTranslate="ecomApp.demande.home.createOrEditLabel">
+        Create or edit a Demande
+      </h2>
+
+      <div>
+        <jhi-alert-error />
+
+        @if (editForm.controls.id.value !== null) {
+          <div class="mb-3">
+            <label class="form-label" for="field_id" jhiTranslate="ecomApp.demande.id">ID</label>
+            <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+          </div>
+        }
+
+        @let descriptionRef = editForm.get('description')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_description" jhiTranslate="ecomApp.demande.description">Description</label>
+          <textarea
+            class="form-control"
+            name="description"
+            id="field_description"
+            data-cy="description"
+            formControlName="description"
+          ></textarea>
+          @if (descriptionRef.invalid && (descriptionRef.dirty || descriptionRef.touched)) {
+            <div>
+              @if (editForm.get('description')?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">This field is required.</small>
+              }
+            </div>
+          }
+        </div>
+
+        @let typeBesoinRef = editForm.get('typeBesoin')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_typeBesoin" jhiTranslate="ecomApp.demande.typeBesoin">Type Besoin</label>
+          <input
+            type="text"
+            class="form-control"
+            name="typeBesoin"
+            id="field_typeBesoin"
+            data-cy="typeBesoin"
+            formControlName="typeBesoin"
+          />
+          @if (typeBesoinRef.invalid && (typeBesoinRef.dirty || typeBesoinRef.touched)) {
+            <div>
+              @if (editForm.get('typeBesoin')?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">This field is required.</small>
+              }
+            </div>
+          }
+        </div>
+
+        @let geolocalisationRef = editForm.get('geolocalisation')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_geolocalisation" jhiTranslate="ecomApp.demande.geolocalisation">Geolocalisation</label>
+          <input
+            type="text"
+            class="form-control"
+            name="geolocalisation"
+            id="field_geolocalisation"
+            data-cy="geolocalisation"
+            formControlName="geolocalisation"
+          />
+          @if (geolocalisationRef.invalid && (geolocalisationRef.dirty || geolocalisationRef.touched)) {
+            <div>
+              @if (editForm.get('geolocalisation')?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">This field is required.</small>
+              }
+            </div>
+          }
+        </div>
+
+        @let statutRef = editForm.get('statut')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_statut" jhiTranslate="ecomApp.demande.statut">Statut</label>
+          <select class="form-control" name="statut" formControlName="statut" id="field_statut" data-cy="statut">
+            <option [ngValue]="null">{{ 'ecomApp.StatutDemande.null' | translate }}</option>
+            @for (statutDemande of statutDemandeValues; track $index) {
+              <option [value]="statutDemande">{{ 'ecomApp.StatutDemande.' + statutDemande | translate }}</option>
+            }
+          </select>
+          @if (statutRef.invalid && (statutRef.dirty || statutRef.touched)) {
+            <div>
+              @if (editForm.get('statut')?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">This field is required.</small>
+              }
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_isArchived" jhiTranslate="ecomApp.demande.isArchived">Is Archived</label>
+          <input
+            type="checkbox"
+            class="form-check"
+            name="isArchived"
+            id="field_isArchived"
+            data-cy="isArchived"
+            formControlName="isArchived"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_utilisateur" jhiTranslate="ecomApp.demande.utilisateur">Utilisateur</label>
+          <select
+            class="form-control"
+            id="field_utilisateur"
+            data-cy="utilisateur"
+            name="utilisateur"
+            formControlName="utilisateur"
+            [compareWith]="compareUtilisateur"
+          >
+            <option [ngValue]="null"></option>
+            @for (utilisateurOption of utilisateursSharedCollection; track $index) {
+              <option [ngValue]="utilisateurOption">{{ utilisateurOption.nom }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_crise" jhiTranslate="ecomApp.demande.crise">Crise</label>
+          <select class="form-control" id="field_crise" data-cy="crise" name="crise" formControlName="crise" [compareWith]="compareCrise">
+            <option [ngValue]="null"></option>
+            @for (criseOption of crisesSharedCollection; track $index) {
+              <option [ngValue]="criseOption">{{ criseOption.nom }}</option>
+            }
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,62 @@
+/**
+ * Assista Crise JDL - v8.11.0 Compliant
+ */
+
+enum TypeCrise {
+    FEU_DE_FORET, INONDATION, GLISSEMENT_DE_TERRAIN, ACCIDENT_INDUSTRIEL
+}
+
+enum StatutDemande {
+    OUVERTE, EN_COURS_DE_RESOLUTION, RESOLUE, FERMEE
+}
+
+entity Crise {
+    nom String required maxlength(100),
+    nature TypeCrise required,
+    dateDebut ZonedDateTime required,
+    dateFin ZonedDateTime,
+    isActive Boolean
+}
+
+entity Demande {
+    description TextBlob required,
+    typeBesoin String required,
+    geolocalisation String required,
+    statut StatutDemande required,
+    isArchived Boolean
+}
+
+entity Offre {
+    description TextBlob required,
+    geolocalisation String required,
+    isArchived Boolean
+}
+
+entity Information {
+    contenu TextBlob required,
+    horodatage ZonedDateTime required
+}
+
+entity Utilisateur {
+    nom String required,
+    prenom String required,
+    email String required pattern(/^[^@\s]+@[^@\s]+\.[^@\s]+$/),
+    isBanned Boolean
+}
+
+relationship ManyToOne {
+    Demande{utilisateur(nom)} to Utilisateur,
+    Offre{utilisateur(nom)} to Utilisateur,
+    Information{utilisateur(nom)} to Utilisateur,
+
+    Demande{crise(nom)} to Crise,
+    Offre{crise(nom)} to Crise,
+    Information{crise(nom)} to Crise
+}
+
+relationship ManyToMany {
+    Utilisateur{criseTouchee(nom)} to Crise{sinistre}
+}
+
+paginate * with pagination
+service * with serviceClass

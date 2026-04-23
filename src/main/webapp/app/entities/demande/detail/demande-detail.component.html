@@ -1,0 +1,70 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (demande(); as demandeRef) {
+      <div>
+        <h2 data-cy="demandeDetailsHeading"><span jhiTranslate="ecomApp.demande.detail.title">Demande</span></h2>
+
+        <hr />
+
+        <jhi-alert-error />
+
+        <jhi-alert />
+
+        <dl class="row-md jh-entity-details">
+          <dt><span jhiTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ demandeRef.id }}</span>
+          </dd>
+          <dt><span jhiTranslate="ecomApp.demande.description">Description</span></dt>
+          <dd>
+            <span>{{ demandeRef.description }}</span>
+          </dd>
+          <dt><span jhiTranslate="ecomApp.demande.typeBesoin">Type Besoin</span></dt>
+          <dd>
+            <span>{{ demandeRef.typeBesoin }}</span>
+          </dd>
+          <dt><span jhiTranslate="ecomApp.demande.geolocalisation">Geolocalisation</span></dt>
+          <dd>
+            <span>{{ demandeRef.geolocalisation }}</span>
+          </dd>
+          <dt><span jhiTranslate="ecomApp.demande.statut">Statut</span></dt>
+          <dd>
+            <span [jhiTranslate]="'ecomApp.StatutDemande.' + (demandeRef.statut ?? 'null')">{{
+              { null: '', OUVERTE: 'OUVERTE', EN_COURS_DE_RESOLUTION: 'EN_COURS_DE_RESOLUTION', RESOLUE: 'RESOLUE', FERMEE: 'FERMEE' }[
+                demandeRef.statut ?? 'null'
+              ]
+            }}</span>
+          </dd>
+          <dt><span jhiTranslate="ecomApp.demande.isArchived">Is Archived</span></dt>
+          <dd>
+            <span>{{ demandeRef.isArchived }}</span>
+          </dd>
+          <dt><span jhiTranslate="ecomApp.demande.utilisateur">Utilisateur</span></dt>
+          <dd>
+            @if (demande()!.utilisateur) {
+              <div>
+                <a [routerLink]="['/utilisateur', demande()!.utilisateur?.id, 'view']">{{ demandeRef.utilisateur?.nom }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span jhiTranslate="ecomApp.demande.crise">Crise</span></dt>
+          <dd>
+            @if (demande()!.crise) {
+              <div>
+                <a [routerLink]="['/crise', demande()!.crise?.id, 'view']">{{ demandeRef.crise?.nom }}</a>
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/demande', demandeRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

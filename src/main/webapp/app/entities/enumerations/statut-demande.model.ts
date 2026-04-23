@@ -1,0 +1,9 @@
+export enum StatutDemande {
+  OUVERTE = 'OUVERTE',
+
+  EN_COURS_DE_RESOLUTION = 'EN_COURS_DE_RESOLUTION',
+
+  RESOLUE = 'RESOLUE',
+
+  FERMEE = 'FERMEE',
+}

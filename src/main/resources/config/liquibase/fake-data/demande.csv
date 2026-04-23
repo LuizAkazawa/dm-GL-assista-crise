@@ -1,0 +1,11 @@
+id;description;type_besoin;geolocalisation;statut;is_archived
+1;../fake-data/blob/hipster.txt;clearly;grumpy possible;FERMEE;true
+2;../fake-data/blob/hipster.txt;chunder nor youthful;duh disclosure;EN_COURS_DE_RESOLUTION;true
+3;../fake-data/blob/hipster.txt;meanwhile;content seemingly regarding;FERMEE;false
+4;../fake-data/blob/hipster.txt;pfft until failing;supposing the majestically;RESOLUE;true
+5;../fake-data/blob/hipster.txt;tail;stack now;OUVERTE;true
+6;../fake-data/blob/hipster.txt;hence;uh-huh;FERMEE;false
+7;../fake-data/blob/hipster.txt;lumpy gosh faithfully;obedience;EN_COURS_DE_RESOLUTION;true
+8;../fake-data/blob/hipster.txt;because;inasmuch subtract;OUVERTE;true
+9;../fake-data/blob/hipster.txt;put;crafty abseil;OUVERTE;true
+10;../fake-data/blob/hipster.txt;upon;untimely switchboard;EN_COURS_DE_RESOLUTION;false

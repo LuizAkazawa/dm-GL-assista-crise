@@ -1,0 +1,47 @@
+{
+  "annotations": {
+    "changelogDate": "20260423080712"
+  },
+  "applications": "*",
+  "fields": [
+    {
+      "fieldName": "nom",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "maxlength"],
+      "fieldValidateRulesMaxlength": "100"
+    },
+    {
+      "fieldName": "nature",
+      "fieldType": "TypeCrise",
+      "fieldTypeDocumentation": "Assista Crise JDL - v8.11.0 Compliant",
+      "fieldValidateRules": ["required"],
+      "fieldValues": "FEU_DE_FORET,INONDATION,GLISSEMENT_DE_TERRAIN,ACCIDENT_INDUSTRIEL"
+    },
+    {
+      "fieldName": "dateDebut",
+      "fieldType": "ZonedDateTime",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "dateFin",
+      "fieldType": "ZonedDateTime"
+    },
+    {
+      "fieldName": "isActive",
+      "fieldType": "Boolean"
+    }
+  ],
+  "name": "Crise",
+  "pagination": "pagination",
+  "relationships": [
+    {
+      "otherEntityName": "utilisateur",
+      "otherEntityRelationshipName": "criseTouchee",
+      "relationshipName": "sinistre",
+      "relationshipSide": "right",
+      "relationshipType": "many-to-many"
+    }
+  ],
+  "searchEngine": "no",
+  "service": "serviceClass"
+}

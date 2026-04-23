@@ -1,0 +1,42 @@
+{
+  "annotations": {
+    "changelogDate": "20260423080714"
+  },
+  "applications": "*",
+  "fields": [
+    {
+      "fieldName": "description",
+      "fieldType": "TextBlob",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "geolocalisation",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "isArchived",
+      "fieldType": "Boolean"
+    }
+  ],
+  "name": "Offre",
+  "pagination": "pagination",
+  "relationships": [
+    {
+      "otherEntityField": "nom",
+      "otherEntityName": "utilisateur",
+      "relationshipName": "utilisateur",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "nom",
+      "otherEntityName": "crise",
+      "relationshipName": "crise",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "searchEngine": "no",
+  "service": "serviceClass"
+}

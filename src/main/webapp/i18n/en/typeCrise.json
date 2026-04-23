@@ -1,0 +1,11 @@
+{
+  "ecomApp": {
+    "TypeCrise": {
+      "null": "",
+      "FEU_DE_FORET": "FEU_DE_FORET",
+      "INONDATION": "INONDATION",
+      "GLISSEMENT_DE_TERRAIN": "GLISSEMENT_DE_TERRAIN",
+      "ACCIDENT_INDUSTRIEL": "ACCIDENT_INDUSTRIEL"
+    }
+  }
+}

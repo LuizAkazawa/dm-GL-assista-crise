@@ -1,0 +1,11 @@
+{
+  "ecomApp": {
+    "StatutDemande": {
+      "null": "",
+      "OUVERTE": "OUVERTE",
+      "EN_COURS_DE_RESOLUTION": "EN_COURS_DE_RESOLUTION",
+      "RESOLUE": "RESOLUE",
+      "FERMEE": "FERMEE"
+    }
+  }
+}

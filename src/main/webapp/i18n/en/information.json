@@ -1,0 +1,27 @@
+{
+  "ecomApp": {
+    "information": {
+      "home": {
+        "title": "Information",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Information",
+        "createOrEditLabel": "Create or edit a Information",
+        "notFound": "No Information found"
+      },
+      "created": "A new Information is created with identifier {{ param }}",
+      "updated": "A Information is updated with identifier {{ param }}",
+      "deleted": "A Information is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Information {{ id }}?"
+      },
+      "detail": {
+        "title": "Information"
+      },
+      "id": "ID",
+      "contenu": "Contenu",
+      "horodatage": "Horodatage",
+      "utilisateur": "Utilisateur",
+      "crise": "Crise"
+    }
+  }
+}

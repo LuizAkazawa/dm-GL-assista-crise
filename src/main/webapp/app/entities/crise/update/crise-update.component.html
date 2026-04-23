@@ -1,0 +1,138 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-crise-heading" data-cy="CriseCreateUpdateHeading" jhiTranslate="ecomApp.crise.home.createOrEditLabel">
+        Create or edit a Crise
+      </h2>
+
+      <div>
+        <jhi-alert-error />
+
+        @if (editForm.controls.id.value !== null) {
+          <div class="mb-3">
+            <label class="form-label" for="field_id" jhiTranslate="ecomApp.crise.id">ID</label>
+            <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+          </div>
+        }
+
+        @let nomRef = editForm.get('nom')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_nom" jhiTranslate="ecomApp.crise.nom">Nom</label>
+          <input type="text" class="form-control" name="nom" id="field_nom" data-cy="nom" formControlName="nom" />
+          @if (nomRef.invalid && (nomRef.dirty || nomRef.touched)) {
+            <div>
+              @if (editForm.get('nom')?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">This field is required.</small>
+              }
+              @if (editForm.get('nom')?.errors?.maxlength) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.maxlength" [translateValues]="{ max: '100' }"
+                  >This field cannot be longer than 100 characters.</small
+                >
+              }
+            </div>
+          }
+        </div>
+
+        @let natureRef = editForm.get('nature')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_nature" jhiTranslate="ecomApp.crise.nature">Nature</label>
+          <select class="form-control" name="nature" formControlName="nature" id="field_nature" data-cy="nature">
+            <option [ngValue]="null">{{ 'ecomApp.TypeCrise.null' | translate }}</option>
+            @for (typeCrise of typeCriseValues; track $index) {
+              <option [value]="typeCrise">{{ 'ecomApp.TypeCrise.' + typeCrise | translate }}</option>
+            }
+          </select>
+          @if (natureRef.invalid && (natureRef.dirty || natureRef.touched)) {
+            <div>
+              @if (editForm.get('nature')?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">This field is required.</small>
+              }
+            </div>
+          }
+        </div>
+
+        @let dateDebutRef = editForm.get('dateDebut')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_dateDebut" jhiTranslate="ecomApp.crise.dateDebut">Date Debut</label>
+          <div class="d-flex">
+            <input
+              id="field_dateDebut"
+              data-cy="dateDebut"
+              type="datetime-local"
+              class="form-control"
+              name="dateDebut"
+              formControlName="dateDebut"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+          @if (dateDebutRef.invalid && (dateDebutRef.dirty || dateDebutRef.touched)) {
+            <div>
+              @if (editForm.get('dateDebut')?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">This field is required.</small>
+              }
+              <small
+                class="form-text text-danger"
+                [hidden]="!editForm.get('dateDebut')?.errors?.datetimelocal"
+                jhiTranslate="entity.validation.datetimelocal"
+                >This field should be a date and time.</small
+              >
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_dateFin" jhiTranslate="ecomApp.crise.dateFin">Date Fin</label>
+          <div class="d-flex">
+            <input
+              id="field_dateFin"
+              data-cy="dateFin"
+              type="datetime-local"
+              class="form-control"
+              name="dateFin"
+              formControlName="dateFin"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_isActive" jhiTranslate="ecomApp.crise.isActive">Is Active</label>
+          <input type="checkbox" class="form-check" name="isActive" id="field_isActive" data-cy="isActive" formControlName="isActive" />
+        </div>
+
+        <div class="mb-3">
+          <label for="field_sinistres" jhiTranslate="ecomApp.crise.sinistre">Sinistre</label>
+          <select
+            class="form-control"
+            id="field_sinistres"
+            data-cy="sinistre"
+            multiple
+            name="sinistres"
+            formControlName="sinistres"
+            [compareWith]="compareUtilisateur"
+          >
+            @for (utilisateurOption of utilisateursSharedCollection; track $index) {
+              <option [ngValue]="utilisateurOption">{{ utilisateurOption.id }}</option>
+            }
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

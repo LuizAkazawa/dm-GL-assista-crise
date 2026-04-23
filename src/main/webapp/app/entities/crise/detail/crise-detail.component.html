@@ -1,0 +1,67 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (crise(); as criseRef) {
+      <div>
+        <h2 data-cy="criseDetailsHeading"><span jhiTranslate="ecomApp.crise.detail.title">Crise</span></h2>
+
+        <hr />
+
+        <jhi-alert-error />
+
+        <jhi-alert />
+
+        <dl class="row-md jh-entity-details">
+          <dt><span jhiTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ criseRef.id }}</span>
+          </dd>
+          <dt><span jhiTranslate="ecomApp.crise.nom">Nom</span></dt>
+          <dd>
+            <span>{{ criseRef.nom }}</span>
+          </dd>
+          <dt><span jhiTranslate="ecomApp.crise.nature">Nature</span></dt>
+          <dd>
+            <span [jhiTranslate]="'ecomApp.TypeCrise.' + (criseRef.nature ?? 'null')">{{
+              {
+                null: '',
+                FEU_DE_FORET: 'FEU_DE_FORET',
+                INONDATION: 'INONDATION',
+                GLISSEMENT_DE_TERRAIN: 'GLISSEMENT_DE_TERRAIN',
+                ACCIDENT_INDUSTRIEL: 'ACCIDENT_INDUSTRIEL',
+              }[criseRef.nature ?? 'null']
+            }}</span>
+          </dd>
+          <dt><span jhiTranslate="ecomApp.crise.dateDebut">Date Debut</span></dt>
+          <dd>
+            <span>{{ criseRef.dateDebut | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span jhiTranslate="ecomApp.crise.dateFin">Date Fin</span></dt>
+          <dd>
+            <span>{{ criseRef.dateFin | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span jhiTranslate="ecomApp.crise.isActive">Is Active</span></dt>
+          <dd>
+            <span>{{ criseRef.isActive }}</span>
+          </dd>
+          <dt><span jhiTranslate="ecomApp.crise.sinistre">Sinistre</span></dt>
+          <dd>
+            @for (sinistre of criseRef.sinistres; track $index; let last = $last) {
+              <span>
+                <a [routerLink]="['/utilisateur', sinistre.id, 'view']">{{ sinistre?.id }}</a
+                >{{ last ? '' : ', ' }}
+              </span>
+            }
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/crise', criseRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

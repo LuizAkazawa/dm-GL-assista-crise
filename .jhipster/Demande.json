@@ -1,0 +1,53 @@
+{
+  "annotations": {
+    "changelogDate": "20260423080713"
+  },
+  "applications": "*",
+  "fields": [
+    {
+      "fieldName": "description",
+      "fieldType": "TextBlob",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "typeBesoin",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "geolocalisation",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "statut",
+      "fieldType": "StatutDemande",
+      "fieldValidateRules": ["required"],
+      "fieldValues": "OUVERTE,EN_COURS_DE_RESOLUTION,RESOLUE,FERMEE"
+    },
+    {
+      "fieldName": "isArchived",
+      "fieldType": "Boolean"
+    }
+  ],
+  "name": "Demande",
+  "pagination": "pagination",
+  "relationships": [
+    {
+      "otherEntityField": "nom",
+      "otherEntityName": "utilisateur",
+      "relationshipName": "utilisateur",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "nom",
+      "otherEntityName": "crise",
+      "relationshipName": "crise",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "searchEngine": "no",
+  "service": "serviceClass"
+}
